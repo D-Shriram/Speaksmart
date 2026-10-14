@@ -1,0 +1,2 @@
+import {db,json,adminUser} from "./_shared.mjs";
+export default async(req)=>{if(req.method!=="GET")return json({error:"Method not allowed"},405);try{const user=await adminUser(req);if(!user)return json({error:"Admin access required."},403);const rows=await db("attempts?completed=eq.true&select=id,score,total_questions,duration_seconds,completed_at,participant:participants(id,team_number,first_name,last_name)&order=score.desc,completed_at.asc");return json({results:rows});}catch(e){return json({error:e.message||"Unable to load admin results"},500)}};

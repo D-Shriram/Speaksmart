@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#100d25">
+  <title>SpeakSmart — Communication Challenge</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="SpeakSmart home"><span class="brand-mark">S</span><span>Speak<span class="accent">Smart</span></span></a>
+    <button id="requestBtn" class="button button-ghost">Request another attempt</button>
+  </header>
+  <main id="app" class="shell">
+    <section id="homeView" class="hero panel">
+      <div class="eyebrow"><span class="pulse"></span> THE COMMUNICATION CHALLENGE</div>
+      <h1>Speak with <span class="gradient-text">confidence.</span><br>Connect with impact.</h1>
+      <p class="intro">Test your skills in voice tone, speaking pace, professional etiquette and telephonic communication.</p>
+      <div class="feature-row"><span>⚡ Timed questions</span><span>🎯 3 difficulty levels</span><span>🏆 Team competition</span></div>
+      <form id="participantForm" class="participant-form panel-soft">
+        <div class="form-heading"><div><h2>Ready to play?</h2><p>Enter your details to join the challenge.</p></div><span class="step-tag">01 / JOIN</span></div>
+        <label>Team number<input id="teamNumber" required maxlength="20" placeholder="e.g. 4" autocomplete="off"></label>
+        <div class="two-col">
+          <label>First name<input id="firstName" required maxlength="50" placeholder="First name" autocomplete="given-name"></label>
+          <label>Last name<input id="lastName" required maxlength="50" placeholder="Last name" autocomplete="family-name"></label>
+        </div>
+        <button class="button button-primary button-wide" type="submit">Start the challenge <span>→</span></button>
+        <p id="homeMessage" class="message" role="status"></p>
+      </form>
+    </section>
+
+    <section id="quizView" class="panel quiz-panel hidden">
+      <div class="quiz-top"><span id="difficultyPill" class="difficulty">EASY</span><span id="questionCounter">QUESTION 1 / 12</span></div>
+      <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+      <div class="timer-row"><span>Choose your best response</span><span class="timer" id="timer">15s</span></div>
+      <h2 id="questionText" class="question-text">Question goes here</h2>
+      <div id="options" class="options"></div>
+      <p id="quizMessage" class="message" role="status"></p>
+    </section>
+
+    <section id="thanksView" class="panel center-panel hidden">
+      <div class="success-orb">✓</div><div class="eyebrow">CHALLENGE COMPLETE</div>
+      <h1>Thanks for <span class="gradient-text">participating!</span></h1>
+      <p id="thanksText" class="intro">Your answers have been recorded.</p>
+      <div class="score-card"><span>Your score</span><strong id="finalScore">0 / 12</strong></div>
+      <p class="muted">Please let the facilitator know you have finished. Refreshing this page will not start another attempt.</p>
+    </section>
+
+    <section id="requestView" class="panel narrow-panel hidden">
+      <div class="eyebrow">PARTICIPANT ACCESS</div><h1>Request another <span class="gradient-text">attempt</span></h1>
+      <p class="intro">Enter the facilitator's request code to return to the start page.</p>
+      <form id="requestForm"><label>Request code<input id="requestCode" type="password" required inputmode="numeric" placeholder="Enter code"></label><button class="button button-primary button-wide">Verify code</button><p id="requestMessage" class="message" role="status"></p></form>
+      <button id="cancelRequest" class="button button-ghost button-wide">Back</button>
+    </section>
+
+    <section id="adminLoginView" class="panel narrow-panel hidden">
+      <div class="eyebrow">RESTRICTED AREA</div><h1>Admin <span class="gradient-text">login</span></h1>
+      <p class="intro">Sign in with the administrator account configured in Supabase.</p>
+      <form id="adminLoginForm"><label>Admin email<input id="adminEmail" type="email" required autocomplete="username" placeholder="admin@example.com"></label><label>Password<input id="adminPassword" type="password" required autocomplete="current-password" placeholder="Password"></label><button class="button button-primary button-wide">Sign in</button><p id="adminLoginMessage" class="message" role="status"></p></form>
+    </section>
+
+    <section id="adminView" class="hidden">
+      <div class="admin-heading"><div><div class="eyebrow">CONTROL ROOM</div><h1>Admin <span class="gradient-text">dashboard</span></h1></div><button id="adminLogout" class="button button-ghost">Log out</button></div>
+      <div class="stats-grid"><div class="stat panel"><span>Participants</span><strong id="statParticipants">—</strong></div><div class="stat panel"><span>Teams</span><strong id="statTeams">—</strong></div><div class="stat panel"><span>Completed attempts</span><strong id="statAttempts">—</strong></div></div>
+      <div class="admin-tabs"><button class="tab active" data-tab="individual">Individual leaderboard</button><button class="tab" data-tab="teams">Team leaderboard</button><button class="tab" data-tab="celebrate">Celebrations</button></div>
+      <div id="individualTab" class="panel table-panel"><h2>Individual leaderboard</h2><div id="individualTable"></div></div>
+      <div id="teamsTab" class="panel table-panel hidden"><h2>Team leaderboard</h2><div id="teamsTable"></div></div>
+      <div id="celebrateTab" class="panel hidden"><h2>Winner celebrations</h2><p class="intro">Open a separate full-screen celebration for the current top-ranked individual or team.</p><div class="two-col celebration-actions"><button id="celebrateIndividual" class="button button-primary">🏆 Individual winners</button><button id="celebrateTeam" class="button button-primary">🎉 Winning team</button></div></div>
+      <p id="adminMessage" class="message"></p>
+    </section>
+
+    <section id="celebrationView" class="panel center-panel hidden celebration-view">
+      <div class="confetti" aria-hidden="true">✦　✧　✦　✧　✦</div><div class="eyebrow">SPEAKSMART AWARDS</div><div id="celebrationIcon" class="success-orb">🏆</div><h1 id="celebrationTitle">Congratulations!</h1><p id="celebrationWinner" class="winner-name"></p><p id="celebrationDetail" class="intro"></p><button id="backToAdmin" class="button button-primary">Back to admin</button>
+    </section>
+  </main>
+  <footer>SpeakSmart <span>•</span> Listen well. Speak clearly. Connect better.</footer>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
